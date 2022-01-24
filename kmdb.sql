@@ -69,12 +69,268 @@
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
 
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS people;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS topcast;
+
 -- Create new tables, according to your domain model
 -- TODO!
+
+CREATE TABLE movies (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  movie_title TEXT,
+  release_date DATETIME,
+  director TEXT,
+  rating TEXT
+);
+
+CREATE TABLE people (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT,
+  last_name TEXT
+);
+
+CREATE TABLE roles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role_name TEXT
+);
+
+CREATE TABLE topcast (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role_id INTEGER,
+  movie_id INTEGER,
+  people_id INTEGER
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
 -- TODO!
+
+INSERT INTO movies (movie_title, release_date, director, rating)
+VALUES ("Batman Begins", "2005", "Christopher Nolan", "PG-13");
+
+INSERT INTO movies (movie_title, release_date, director, rating)
+VALUES ("The Dark Knight", "2008", "Christopher Nolan", "PG-13");
+
+INSERT into movies (movie_title, release_date, director, rating)
+VALUES ("The Dark Knight Rises", "2012", "Christopher Nolan", "PG-13");
+
+INSERT into people (first_name, last_name)
+VALUES ("Christian", "Bale");
+INSERT into people (first_name, last_name)
+VALUES ("Michael", "Cane");
+
+INSERT into people (first_name, last_name)
+VALUES ("Liam", "Neeson");
+
+INSERT into people (first_name, last_name)
+VALUES ("Katie", "Holmes");
+
+INSERT into people (first_name, last_name)
+VALUES ("Gary", "Oldman");
+
+INSERT into people (first_name, last_name)
+VALUES ("Heath", "Ledger");
+
+INSERT into people (first_name, last_name)
+VALUES ("Aaron", "Eckhart");
+
+INSERT into people (first_name, last_name)
+VALUES ("Maggie", "Gyllenhaal");
+
+INSERT into people (first_name, last_name)
+VALUES ("Tom", "Hardy");
+
+INSERT into people (first_name, last_name)
+VALUES ("Joeseph", "Gordon-Levitt");
+
+INSERT into people (first_name, last_name)
+VALUES ("Anne", "Hathaway");
+
+INSERT into roles (role_name)
+VALUES ("Bruce Wayne");
+
+INSERT into roles (role_name)
+VALUES ("Alfred");
+
+INSERT into roles (role_name)
+VALUES ("Ra's Al Ghul");
+
+INSERT into roles (role_name)
+VALUES ("Rachel Dawes");
+
+INSERT into roles (role_name)
+VALUES ("Commissioner Gordon");
+
+INSERT into roles (role_name)
+VALUES ("Joker");
+
+INSERT into roles (role_name)
+VALUES ("Harvey Dent");
+
+INSERT into roles (role_name)
+VALUES ("Bane");
+
+INSERT into roles (role_name)
+VALUES ("John Blake");
+
+INSERT into roles (role_name)
+VALUES ("Selina Kyle");
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "1",
+    "1",
+    "1"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "2",
+    "2",
+    "1"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "3",
+    "3",
+    "1"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "4",
+    "4",
+    "1"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "5",
+    "5",
+    "1"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "1",
+    "1",
+    "2"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "6",
+    "6",
+    "2"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "7",
+    "7",
+    "2"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "4",
+    "8",
+    "2"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "1",
+    "1",
+    "3"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "5",
+    "5",
+    "3"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "8",
+    "9",
+    "3"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "9",
+    "10",
+    "3"
+);
+
+INSERT into topcast (
+    role_id,
+    people_id,
+    movie_id
+)
+VALUES (
+    "10",
+    "11",
+    "3"
+);
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -84,12 +340,19 @@
 -- The SQL statement for the movies output
 -- TODO!
 
+SELECT * FROM movies;
+
 -- Prints a header for the cast output
 .print ""
 .print "Top Cast"
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
 -- TODO!
+
+SELECT movies.movie_title, people.first_name, people.last_name, roles.role_name
+FROM topcast INNER JOIN movies ON movies.id = topcast.movie_id 
+INNER JOIN people ON people.id = topcast.people_id
+INNER JOIN roles ON roles.id = topcast.role_id
+ORDER BY movies.id;
